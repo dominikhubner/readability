@@ -1,15 +1,19 @@
 #include <stdio.h>
-#include <cs50.h>
 #include <string.h>
 #include <math.h>
+#include <stdlib.h>
 
-float count_letters(string text);
-float count_words(string text);
-float count_sentences(string text);
+
+float count_letters(char *text);
+float count_words(char *text);
+float count_sentences(char *text);
+char *inputString(FILE* fp, size_t size);
 
 int main(void)
 {
-    string text = get_string("Text: ");
+    char *text;
+    printf("Text: ");
+    text = inputString(stdin, 10);
     float letters = count_letters(text);
     float words = count_words(text);
     float sentences = count_sentences(text);
@@ -31,7 +35,7 @@ int main(void)
     }
 }
 
-float count_letters(string text)
+float count_letters(char *text)
 {
     float length = strlen(text);
     float letters = 0;
@@ -50,7 +54,7 @@ float count_letters(string text)
     return letters;
 }
 
-float count_words(string text)
+float count_words(char *text)
 {
     int length = strlen(text);
     float words = 0;
@@ -70,7 +74,7 @@ float count_words(string text)
     return words;
 }
 
-float count_sentences(string text)
+float count_sentences(char *text)
 {
     float length = strlen(text);
     float sentences = 0;
@@ -83,4 +87,22 @@ float count_sentences(string text)
         }
     }
     return sentences;
+}
+
+char *inputString(FILE* fp, size_t size){
+    char *str;
+    int ch;
+    size_t len = 0;
+    str = realloc(NULL, sizeof(*str)*size);
+    if(!str)return str;
+    while(EOF!=(ch=fgetc(fp)) && ch != '\n'){
+        str[len++]=ch;
+        if(len==size){
+            str = realloc(str, sizeof(*str)*(size+=16));
+            if(!str)return str;
+        }
+    }
+    str[len++]='\0';
+
+    return realloc(str, sizeof(*str)*len);
 }

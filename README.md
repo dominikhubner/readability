@@ -3,7 +3,7 @@ The Coleman–Liau index is a readability test designed by Meri Coleman and T. L
 
 compile the code with make:
 ```console
-$ make ./readability.c
+$ make ./readability
 ```
 usage:
 ```console

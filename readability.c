@@ -33,6 +33,7 @@ int main(void)
     {
         printf("Grade %i\n", result_round);
     }
+    free(text);
 }
 
 float count_letters(char *text)
